@@ -189,7 +189,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
                 pred = tasks_by_p[i][2]
                 bcet = wcet
                 task_period = tasks_by_p[i][3]
-                INF = int(1e12)
+                INF = int(1e12) #TODO: deadline of a job must be the deadline of the last job in the chain
                 deadline = INF
                 nrof_jobs_of_task = hyperperiod // task_period
 
