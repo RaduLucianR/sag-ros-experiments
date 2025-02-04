@@ -225,6 +225,9 @@ def sobhaniFig9(path):
     San Antonio, TX, USA, 2023, pp. 106-118, doi: 10.1109/RTAS58335.2023.00016.
     keywords: {Job shop scheduling;Service robots;Operating systems;Interference;
     Solids;Real-time systems;Behavioral sciences}, 
+
+    IMPORTANT: The tasks are generated with periods in [50, 200]ms which is NOT how
+    the experiment was done by Sobhani et al.
     '''
     nrof_task_sets = 1000
     nrof_chains = 5
