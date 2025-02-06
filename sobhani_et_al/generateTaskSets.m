@@ -84,7 +84,7 @@ function generateTaskSets(target_sets, Util, N, CN, path)
         % Assemble the task set matrix:
         %   Column 1: Task period
         %   Column 2: Task execution time
-        %   Column 3: Task period (again, e.g., for deadline assignment)
+        %   Column 3: Task period (again, e.g., for deadline assignment) i.e. implicit deadlines
         %   Column 4: Task id (from 1 to N*CN)
         %   Column 5: Chain id
         task_ids = (1:(N*CN))';
