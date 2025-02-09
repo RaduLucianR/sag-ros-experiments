@@ -31,7 +31,7 @@ function generateTaskSets(target_sets, Util, N, CN, path)
 %   (Note: You can modify the values of 'a' and 'b' as needed.)
 
     % Define the acceptable interval for s values.
-    a = 0;   % lower bound (adjust as needed)
+    a = 1;   % lower bound (adjust as needed)
     b = 60000;  % upper bound (adjust as needed)
     
     num_sets = 0;
@@ -42,18 +42,18 @@ function generateTaskSets(target_sets, Util, N, CN, path)
         T_chain = sort(T_chain);  % sort in ascending order
         
         % --- Compute the hyper-period (LCM of all chain periods) ---
-        hyperperiod = T_chain(1);
-        for t = 2:CN
-            hyperperiod = lcm(hyperperiod, T_chain(t));
-        end
-        
-        % Compute s for each chain: s = (hyperperiod / chain period) * N.
-        s_values = (hyperperiod ./ T_chain) * N;
-        
-        % Reject the task set if any s is not in the interval [a, b]
-        if any(s_values < a | s_values > b)
-            continue;  % Skip to next iteration (do not count this candidate)
-        end
+%         hyperperiod = T_chain(1);
+%         for t = 2:CN
+%             hyperperiod = lcm(hyperperiod, T_chain(t));
+%         end
+%         
+%         % Compute s for each chain: s = (hyperperiod / chain period) * N.
+%         s_values = (hyperperiod ./ T_chain) * N;
+%         
+%         % Reject the task set if any s is not in the interval [a, b]
+%         if any(s_values < a | s_values > b)
+%             continue;  % Skip to next iteration (do not count this candidate)
+%         end
         
         % --- Proceed to generate the rest of the task set ---
         

@@ -28,10 +28,11 @@ end
 
 %% Part 2. Analysis: Read files and compute schedulability ratio
 % Settings for schedulability analysis (assume PWA_CD is available).
-M = 4;          % number of processors
+M = 2;          % number of processors
 PRIO = 0;       % priority-driven flag (1: priority-driven, 0: non-priority)
 CG_enabled = 0; % CG flag (1: mutually-exclusive, 0: reentrant)
 
+util_values = 0.8:0.4:4.0;
 sched_ratio = zeros(size(util_values));  % to store schedulability ratio for each U
 
 fprintf('Starting analysis of generated task-set files...\n');
