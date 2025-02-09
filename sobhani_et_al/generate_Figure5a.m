@@ -8,7 +8,7 @@ CG_enabled = 0; % CG flag (1: mutually-exclusive, 0: reentrant)
 
 fprintf('Starting analysis of the case study...\n');
 for k = 1:1
-    fileName = sprintf('sobhani_case_study2.txt');
+    fileName = sprintf('sobhani_case_study_floats.txt');
     
     if ~exist(fileName, 'file')
         warning('File %s not found. Skipping...', fileName);
