@@ -149,8 +149,8 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
                 pred = tasks_by_p[i][2]
                 bcet = wcet
                 task_period = tasks_by_p[i][3]
-                INF = int(1e12)
-                deadline = INF
+                # INF = int(1e12)
+                # deadline = INF
                 nrof_jobs_of_task = hyperperiod // task_period
 
                 pred_job_idx = -1
@@ -163,6 +163,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
                 for j in range(nrof_jobs_of_task):
                     r_min = j * task_period
                     r_max = r_min
+                    deadline = r_min + task_period
                     row = [task_priority, job_id, r_min, r_max, bcet, wcet, deadline, job_id]
                     writer.writerow(row)
 
