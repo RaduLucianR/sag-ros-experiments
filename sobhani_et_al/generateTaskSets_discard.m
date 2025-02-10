@@ -21,7 +21,7 @@ function generateTaskSets_discard(target_sets, Util, N, CN, path)
         valid = true;
         
         % Generate one period for each chain (uniformly from 1 to 1000)
-        T_chain = 1 + (1000 - 1)*rand(1, CN);
+        T_chain = 1 + (1000 - 1) * rand(1, CN);
         T_chain = sort(T_chain);
     
         % Initialize the period and chain-index vectors for all tasks

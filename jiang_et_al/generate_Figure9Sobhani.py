@@ -10,7 +10,7 @@ def sobhani_figure9():
     for U in values:
         path = fr"C:\Users\20191039\Desktop\repos\sag-ros-experiments\sobhani_et_al\tasksets_util_{U}.txt"
         tasksets = convert_sobhani_synthetic_to_jiang(5, 10, path)
-        r = jiang_on_tasksets(tasksets, 4)
+        r = jiang_on_tasksets(tasksets, 4)[0]
         print(f"U={U}, schedulability={r}")
         results.append((U, r))
 

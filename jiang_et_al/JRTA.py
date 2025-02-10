@@ -91,6 +91,8 @@ def convert_sobhani_synthetic_to_jiang(nrof_chains, nrof_callbacks_per_chain, in
 def jiang_on_tasksets(tasksets, m):
     taskset_nr = 1
     sched_task_sets = 0
+    reponse_times_per_chain = []
+
     for taskset in tasksets:
         # print(f"Task set {taskset_nr}")
         schedulable = True
@@ -121,7 +123,7 @@ def jiang_on_tasksets(tasksets, m):
 
             R = max_interf + exec_time_last_cb[chain]   
             D = periods[chain]
-            print(R, D)
+            reponse_times_per_chain.append((taskset_nr, chain, R, D))
 
             if R > D:
                 schedulable = False
@@ -132,4 +134,4 @@ def jiang_on_tasksets(tasksets, m):
         taskset_nr += 1
 
     sched_ratio = sched_task_sets / len(tasksets)
-    return sched_ratio
+    return sched_ratio, reponse_times_per_chain
