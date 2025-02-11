@@ -389,7 +389,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
         task_set_idx +=1
 
 def generate_data_SobhaniFigure9():
-    path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_4k_10k"
+    path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_max_5k"
     path_out = f"./SAG_input_SobhaniFig9"
     nrof_task_sets = 3
     nrof_chains = 5

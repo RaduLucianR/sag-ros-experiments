@@ -51,7 +51,7 @@ function generateTaskSets(target_sets, Util, N, CN, path)
         s_values = (hyperperiod ./ T_chain) * N;
         
         % Reject the task set if any s is not in the interval [a, b]
-        if any(s_values < a | s_values > b)
+        if sum(s_values) < a || sum(s_values) > b
             continue;  % Skip to next iteration (do not count this candidate)
         end
         
