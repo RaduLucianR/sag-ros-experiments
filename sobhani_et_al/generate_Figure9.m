@@ -28,7 +28,7 @@ end
 
 %% Part 2. Analysis: Read files and compute schedulability ratio
 % Settings for schedulability analysis (assume PWA_CD is available).
-M = 2;          % number of processors
+M = 4;          % number of processors
 PRIO = 0;       % priority-driven flag (1: priority-driven, 0: non-priority)
 CG_enabled = 0; % CG flag (1: mutually-exclusive, 0: reentrant)
 
