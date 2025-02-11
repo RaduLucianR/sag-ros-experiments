@@ -2,6 +2,8 @@ import random
 import math
 import os
 import csv
+import numpy as np
+from tqdm import tqdm
 
 def random_permutation(a, b):
     return random.sample(range(a, b + 1), b - a + 1)
@@ -173,7 +175,7 @@ def generate_csv_n_task_sets_odd_chains(input = "", output = ""):
         #         pred[i] = priority[i - 1]
         
         tasks = list(zip(priority, wcets, pred, periods_extended))
-        print(tasks)
+        # print(tasks)
 
         tasks_by_p = sorted(tasks, key=lambda t: t[0])
 
@@ -310,7 +312,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
     task_set_idx = 1
     task_sets = convert_file_to_tasksets(input)
 
-    for task_set in task_sets:
+    for task_set in tqdm(task_sets, desc="Task Sets"):
         periods = [task_set[i] for i in range(0, len(task_set), nrof_callbacks_per_chain + 1)]
         hyperperiod = lcm(periods)
 
@@ -353,7 +355,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
             writer2.writerow(first_row2)
 
             job_id = 1
-            for i in range(0, nrof_tasks):
+            for i in tqdm(range(nrof_tasks), desc="Tasks", leave=False):
                 task_priority = tasks_by_p[i][0]
                 wcet = tasks_by_p[i][1]
                 pred = tasks_by_p[i][2]
@@ -386,10 +388,21 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
 
         task_set_idx +=1
 
-if __name__ == "__main__":
-    filename = "in.txt"
-    U = 0.8
-    path = f"./"
-    subfolder = os.path.join(path, f"util{U}")
-    os.makedirs(subfolder, exist_ok=True) 
-    generate_csv_n_task_sets(1000, U, 5, 10, "sobhani_et_al/tasksets_util_0.8.txt", subfolder)
+def generate_data_SobhaniFigure9():
+    path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_4k_10k"
+    path_out = f"./SAG_input_SobhaniFig9"
+    nrof_task_sets = 3
+    nrof_chains = 5
+    nrof_callbacks_per_chain = 10
+
+    values = np.arange(0.8, 4.1, 0.4)
+    values = [round(v, 1) for v in values] 
+
+    for U in values:
+        print(f"Generating for U={U}")
+        file_in = os.path.join(path_in, f"tasksets_util_{U}.txt")
+        folder_out = os.path.join(path_out, f"tasksets_{U}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets(nrof_task_sets, U, nrof_chains, nrof_callbacks_per_chain, file_in, folder_out)
+
+generate_data_SobhaniFigure9()
