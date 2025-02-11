@@ -32,28 +32,28 @@ function generateTaskSets(target_sets, Util, N, CN, path)
 
     % Define the acceptable interval for s values.
     a = 1;   % lower bound (adjust as needed)
-    b = 60000;  % upper bound (adjust as needed)
+    b = 5000;  % upper bound (adjust as needed)
     
     num_sets = 0;
     
     while num_sets < target_sets
         % Generate one period for each chain (multiples of 10 between 10 and 1000)
-        T_chain = 10 * randi([1, 1000], 1, CN); 
+        T_chain = 10 * randi([1, 100], 1, CN); 
         T_chain = sort(T_chain);  % sort in ascending order
         
         % --- Compute the hyper-period (LCM of all chain periods) ---
-%         hyperperiod = T_chain(1);
-%         for t = 2:CN
-%             hyperperiod = lcm(hyperperiod, T_chain(t));
-%         end
-%         
-%         % Compute s for each chain: s = (hyperperiod / chain period) * N.
-%         s_values = (hyperperiod ./ T_chain) * N;
-%         
-%         % Reject the task set if any s is not in the interval [a, b]
-%         if any(s_values < a | s_values > b)
-%             continue;  % Skip to next iteration (do not count this candidate)
-%         end
+        hyperperiod = T_chain(1);
+        for t = 2:CN
+            hyperperiod = lcm(hyperperiod, T_chain(t));
+        end
+        
+        % Compute s for each chain: s = (hyperperiod / chain period) * N.
+        s_values = (hyperperiod ./ T_chain) * N;
+        
+        % Reject the task set if any s is not in the interval [a, b]
+        if any(s_values < a | s_values > b)
+            continue;  % Skip to next iteration (do not count this candidate)
+        end
         
         % --- Proceed to generate the rest of the task set ---
         
@@ -95,5 +95,6 @@ function generateTaskSets(target_sets, Util, N, CN, path)
         dlmwrite(path, '-', '-append');
         
         num_sets = num_sets + 1;
+        fprintf('Set number = %d\n', num_sets);
     end
 end
