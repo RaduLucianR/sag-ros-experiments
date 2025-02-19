@@ -5,6 +5,7 @@ import glob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from itertools import cycle
 
 def main():
     # Parse command-line arguments: either one or more CSV files, or a single directory.
@@ -44,7 +45,11 @@ def main():
         # Assume Y-values are in the second column.
         y_values = df.iloc[:, 1].tolist()
         y_data.append(y_values)
-        labels.append(os.path.basename(csv_file))
+        bn = os.path.basename(csv_file)
+        label, extension = os.path.splitext(bn)
+        # If label contains an underscore, take the part after it.
+        label = label.split('_', 1)[1] if '_' in label else label
+        labels.append(label)
 
     # Convert y_data to a NumPy array for easier indexing.
     # y_data will have shape (n_files, num_categories)
@@ -53,25 +58,59 @@ def main():
 
     # Determine positions for the groups and width for each bar.
     ind = np.arange(num_categories)  # the x locations for the groups
-    total_width = 0.5                  # total width for all bars in a group (reduced for thinner bars)
-    width = total_width / n_files      # width for each individual bar
+    total_width = 0.5                  # total width reserved for all bars in a group
+    width = total_width / n_files      # computed width for each bar if they touch
+
+    # To introduce a small gap (roughly equivalent to ~2 pixels), use 95% of the computed width.
+    bar_width = width * 0.70
+    
+    contrast_colors = cycle([  '#2ca02c',  # a solid green (not too lime)
+                               '#0000FF',  # a medium blue
+                               '#7c49ab', # purple
+                               '#FF0000',  # a strong red
+                              ])
 
     # Create the bar plot.
-    fig, ax = plt.subplots(figsize=(10, 6))
+        # Set global font properties and colors for high contrast.
+    plt.rcParams.update({
+        'font.family': 'serif',
+        'font.size': 8.5,         # Reduced font size for a smaller figure
+        'text.color': '#000000',       # strong black text
+        'axes.labelcolor': '#000000',  # strong black axis labels
+        'xtick.color': '#000000',      # strong black tick labels
+        'ytick.color': '#000000'
+    })
+
+    # fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(3, 2.5), dpi=300)
     for i in range(n_files):
-        # Compute an offset so that the bars are grouped together.
+        # Compute an offset so that the bars in each group are centered.
         offset = (i - (n_files - 1) / 2) * width
-        ax.bar(ind + offset, y_data[i], width, label=labels[i])
+        color = next(contrast_colors)
+        ax.bar(ind + offset, y_data[i], bar_width,
+               label=labels[i],
+               color=color,
+               edgecolor='black',
+               linewidth=0.7
+            ) 
 
     # Set x-axis ticks and labels.
+    x_category_labels = [f"Chain {i}" for i in x_categories]
     ax.set_xticks(ind)
-    ax.set_xticklabels(x_categories)
-    ax.set_xlabel("X-axis")
-    ax.set_ylabel("Y-axis")
-    ax.set_title("Grouped Bar Plot from CSV Files")
-    ax.legend()
+    ax.set_xticklabels(x_category_labels)
+    ax.set_xlabel("")
+    ax.set_ylabel("Response Time (ms)")
+    ax.set_title("")
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.set_axisbelow(True)  # Ensure grid lines are drawn below other plot elements
+    ax.grid(True, axis='y', linewidth=0.5, color='gray', alpha=0.7)
+
+    # Place the legend outside the plot at the bottom center.
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=6.5)
 
     plt.tight_layout()
+    plt.savefig("JiangCaseStudy.png", bbox_inches="tight", pad_inches=0, dpi=300)
     plt.show()
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ def augment_execution_times(path):
         for row in reader:
             rows.append(row)
 
-    ROS_overhead = 5000 # microseconds
+    ROS_overhead = 7000 # microseconds, so 10ms
 
     for row in rows:
         C_min = int(row[4]) + ROS_overhead
