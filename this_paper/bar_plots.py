@@ -62,7 +62,7 @@ def main():
     width = total_width / n_files      # computed width for each bar if they touch
 
     # To introduce a small gap (roughly equivalent to ~2 pixels), use 95% of the computed width.
-    bar_width = width * 0.70
+    bar_width = width * 0.65
     
     contrast_colors = cycle([  '#2ca02c',  # a solid green (not too lime)
                                '#0000FF',  # a medium blue
@@ -107,7 +107,7 @@ def main():
     ax.grid(True, axis='y', linewidth=0.5, color='gray', alpha=0.7)
 
     # Place the legend outside the plot at the bottom center.
-    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=6.5)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=6.2)
 
     plt.tight_layout()
     plt.savefig("JiangCaseStudy.png", bbox_inches="tight", pad_inches=0, dpi=300)

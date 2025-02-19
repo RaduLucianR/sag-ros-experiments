@@ -191,4 +191,4 @@ def generate_csv_n_task_sets_odd_chains(input = "", output = ""):
 
         task_set_idx +=1
 
-generate_csv_n_task_sets_odd_chains("/home/radu/repos/sag-ros-experiments/data/SobhaniExp/CaseStudy/sobhani_case_study.txt", "")
+generate_csv_n_task_sets_odd_chains("/home/radu/repos/sag-ros-experiments/data/SobhaniExp/CaseStudy/InputToSobhani/sobhani_case_study_actual_used_values_for_the_plot.txt", "")

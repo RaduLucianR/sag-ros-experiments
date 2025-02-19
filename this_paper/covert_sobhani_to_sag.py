@@ -417,4 +417,18 @@ def generate_data_SobhaniFigure10():
     os.makedirs(folder_out, exist_ok=True) 
     generate_csv_n_task_sets(nrof_task_sets, U, nrof_chains, nrof_callbacks_per_chain, path_in, folder_out)
 
-generate_data_SobhaniFigure10()
+def generate_data_SobhaniFigure11():
+    path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig11"
+    path_out = f"./SAG_input_SobhaniFig11"
+    nrof_task_sets = 1000
+    nrof_callbacks_per_chain = 10
+    U = 1.0
+
+    for nrof_chains in range(1, 11):
+        print(f"Generating for {nrof_chains} chains")
+        file_in = os.path.join(path_in, f"tasksets_cn_{nrof_chains}.txt")
+        folder_out = os.path.join(path_out, f"tasksets_{nrof_chains}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets(nrof_task_sets, U, nrof_chains, nrof_callbacks_per_chain, file_in, folder_out)
+
+generate_data_SobhaniFigure11()

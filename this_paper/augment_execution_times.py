@@ -15,7 +15,7 @@ def augment_execution_times(path):
         for row in reader:
             rows.append(row)
 
-    ROS_overhead = 7000 # microseconds, so 10ms
+    ROS_overhead = 3000 # microseconds, so 10ms
 
     for row in rows:
         C_min = int(row[4]) + ROS_overhead
@@ -31,4 +31,4 @@ def augment_execution_times(path):
         writer.writerow(first_row)
         writer.writerows(rows)
 
-augment_execution_times("/home/radu/repos/sag-ros-experiments/data/JiangExp/CaseStudy1/InputToSAG/task_set_JiangCaseStudy.csv")
+augment_execution_times("/home/radu/repos/sag-ros-experiments/data/SobhaniExp/CaseStudy/InputToSAG/task_set_SobhaniCaseStudy.csv")

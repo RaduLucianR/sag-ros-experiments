@@ -80,7 +80,7 @@ def main():
     # Remove duplicates and sort the x values so that all points (e.g., 0.4) are shown.
     unique_x = sorted(set(all_x_values))
     plt.xticks(unique_x)
-    plt.yticks([i / 10 for i in range(1, 10)])
+    plt.yticks([i / 10 for i in range(1, 11)])
     # Label the axes and set the title using the command-line provided values.
     plt.xlabel(args.xlabel)
     plt.ylabel(args.ylabel)
@@ -92,7 +92,7 @@ def main():
     ax = plt.gca()
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    # ax.tick_params(axis='both', labelsize=8)
+    ax.tick_params(axis='both', labelsize=6)
 
     # Save the figure.
     title = "Fig9"
