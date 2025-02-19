@@ -32,13 +32,13 @@ function generateTaskSets(target_sets, Util, N, CN, path)
 
     % Define the acceptable interval for s values.
     a = 1;   % lower bound (adjust as needed)
-    b = 5000;  % upper bound (adjust as needed)
+    b = 10000;  % upper bound (adjust as needed)
     
     num_sets = 0;
     
     while num_sets < target_sets
         % Generate one period for each chain (multiples of 10 between 10 and 1000)
-        T_chain = 10 * randi([1, 100], 1, CN); 
+        T_chain = 100 * randi([1, 10], 1, CN); 
         T_chain = sort(T_chain);  % sort in ascending order
         
         % --- Compute the hyper-period (LCM of all chain periods) ---

@@ -2,13 +2,13 @@
 
 %% Part 1. Analysis: Read files and compute response times
 % Settings for schedulability analysis (assume PWA_CD is available).
-M = 4;          % number of processors
+M = 2;          % number of processors
 PRIO = 0;       % priority-driven flag (1: priority-driven, 0: non-priority)
 CG_enabled = 0; % CG flag (1: mutually-exclusive, 0: reentrant)
 
 fprintf('Starting analysis of the case study...\n');
 for k = 1:1
-    fileName = sprintf('sobhani_case_study_floats.txt');
+    fileName = sprintf('sobhani_case_study.txt');
     
     if ~exist(fileName, 'file')
         warning('File %s not found. Skipping...', fileName);
@@ -32,12 +32,12 @@ for k = 1:1
             % Find the response-time
             [R, S, SCHED] = PWA_CD(chainset, M, PRIO,CG_enabled);
 
-
             P = []; C = [];
             for c = 1 : size(chainset, 1)
                 P = [P; chainset(c).T];
                 C = [C; sum(chainset(c).C)];
             end
+
             result = struct('chainset_id', num_chain, 'SCHED', SCHED, 'R', R, 'S', S, 'P', P, 'C', C)
             resultset = [resultset; result];
 

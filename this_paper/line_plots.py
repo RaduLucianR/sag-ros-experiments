@@ -80,22 +80,25 @@ def main():
     # Remove duplicates and sort the x values so that all points (e.g., 0.4) are shown.
     unique_x = sorted(set(all_x_values))
     plt.xticks(unique_x)
-    
+    plt.yticks([i / 10 for i in range(1, 10)])
     # Label the axes and set the title using the command-line provided values.
     plt.xlabel(args.xlabel)
     plt.ylabel(args.ylabel)
     plt.title(args.title)
     plt.legend(fontsize=8)  # reduce legend font size if needed
-    plt.grid(True, axis='y', linewidth=0.5, color='gray', alpha=0.7)
+    plt.grid(True, linewidth=0.5, color='gray', alpha=0.7)
     plt.tight_layout()  # Adjusts subplot params for a neat fit
     
     ax = plt.gca()
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
+    # ax.tick_params(axis='both', labelsize=8)
 
     # Save the figure.
     title = "Fig9"
-    plt.savefig(f"/home/radu/repos/sag-ros-experiments/data/SobhaniExp/{title}/tasksets_nrofjobs_max_5k/{title}Tight.png",
+    # output_path = f"/home/radu/repos/sag-ros-experiments/data/SobhaniExp/{title}/tasksets_nrofjobs_max_5k/{title}Tight.png"
+    output_path = "./fig.png"
+    plt.savefig(output_path,
                 bbox_inches="tight", pad_inches=0, dpi=300)
 
     # Display the plot.
