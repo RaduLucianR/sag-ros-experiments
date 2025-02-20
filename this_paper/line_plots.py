@@ -43,6 +43,7 @@ def main():
         '#964B00',  # brown
     ])
     markers = cycle(['o', 's', '^'])
+    # markers = cycle(['$L$', '$L$', '$W$'])
 
     # Process each CSV file.
     for csv_file in args.csv_files:
@@ -79,6 +80,7 @@ def main():
 
     # Remove duplicates and sort the x values so that all points (e.g., 0.4) are shown.
     unique_x = sorted(set(all_x_values))
+    # unique_x = [i for i in range(1, 11)]
     plt.xticks(unique_x)
     plt.yticks([i / 10 for i in range(1, 11)])
     # Label the axes and set the title using the command-line provided values.
@@ -92,7 +94,7 @@ def main():
     ax = plt.gca()
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.tick_params(axis='both', labelsize=6)
+    ax.tick_params(axis='both', labelsize=8)
 
     # Save the figure.
     title = "Fig9"

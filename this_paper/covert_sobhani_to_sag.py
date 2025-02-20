@@ -146,33 +146,31 @@ def generate_csv_n_task_sets_odd_chains(input = "", output = ""):
                 chain_idx += 1
 
         priority = [0 for i in range(nrof_tasks)]
-        priority = [1, 4, 2, 5, 7, 3, 6, 8, 9] # Jiang et al. Case Study 1 has these priorities
-        pred =     [0, 1, 0, 2, 5, 0, 3, 6, 8]
-        # timer_priorities = random_permutation(1, nrof_chains)
-        # subs_prorities = random_permutation(nrof_chains + 1, nrof_tasks)
+        timer_priorities = random_permutation(1, nrof_chains)
+        subs_prorities = random_permutation(nrof_chains + 1, nrof_tasks)
 
-        # period_idx = 0
-        # timer_index= 0
-        # subs_index = 0
-        # for i in range(0, nrof_tasks):
-        #     if i == period_idx:
-        #         priority[i] = timer_priorities[timer_index]
-        #         period_idx += chain_lengths[timer_index]
-        #         timer_index += 1
-        #     else:
-        #         priority[i] = subs_prorities[subs_index]
-        #         subs_index += 1
+        period_idx = 0
+        timer_index= 0
+        subs_index = 0
+        for i in range(0, nrof_tasks):
+            if i == period_idx:
+                priority[i] = timer_priorities[timer_index]
+                period_idx += chain_lengths[timer_index]
+                timer_index += 1
+            else:
+                priority[i] = subs_prorities[subs_index]
+                subs_index += 1
         
-        # period_idx = 0
-        # timer_index = 0
-        # pred = [0 for i in range(nrof_tasks)]
-        # for i in range(0, nrof_tasks):
-        #     if i == period_idx:
-        #         period_idx += chain_lengths[timer_index]
-        #         timer_index += 1
-        #         continue
-        #     else:
-        #         pred[i] = priority[i - 1]
+        period_idx = 0
+        timer_index = 0
+        pred = [0 for i in range(nrof_tasks)]
+        for i in range(0, nrof_tasks):
+            if i == period_idx:
+                period_idx += chain_lengths[timer_index]
+                timer_index += 1
+                continue
+            else:
+                pred[i] = priority[i - 1]
         
         tasks = list(zip(priority, wcets, pred, periods_extended))
         # print(tasks)
@@ -431,4 +429,38 @@ def generate_data_SobhaniFigure11():
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets(nrof_task_sets, U, nrof_chains, nrof_callbacks_per_chain, file_in, folder_out)
 
-generate_data_SobhaniFigure11()
+def generate_data_JiangFigure6():
+    path_in = ""
+    path_out = f"./SAG_input_JiangFig6"
+
+    path_out = f"./SAG_input_JiangFig6/vary_Unorm"
+    values = np.arange(0.1, 1.0, 0.1)
+    values = [round(v, 1) for v in values]
+    for Unorm in values:
+        path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_Unorm/tasksets_unorm_{Unorm}.txt"
+        folder_out = os.path.join(path_out, f"tasksets_{Unorm}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets_odd_chains(path_in, folder_out)
+    
+    path_out = f"./SAG_input_JiangFig6/vary_n"
+    for n in range(2, 9):
+        path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_n/tasksets_n_{n}.txt"
+        folder_out = os.path.join(path_out, f"tasksets_{n}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets_odd_chains(path_in, folder_out)
+    
+    path_out = f"./SAG_input_JiangFig6/vary_b"
+    for b in range(2, 7):
+        path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_b/tasksets_b_{b}.txt"
+        folder_out = os.path.join(path_out, f"tasksets_{b}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets_odd_chains(path_in, folder_out)
+    
+    path_out = f"./SAG_input_JiangFig6/vary_m"
+    for m in range(2, 9):
+        path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_m/tasksets_m_{m}.txt"
+        folder_out = os.path.join(path_out, f"tasksets_{m}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets_odd_chains(path_in, folder_out)
+
+generate_data_JiangFigure6()
