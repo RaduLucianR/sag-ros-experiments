@@ -119,7 +119,7 @@ def generate_csv_n_task_sets_odd_chains(input = "", output = ""):
 
     task_set_idx = 0
     task_sets = convert_file_to_tasksets_odd_chains(input)
-
+    
     for task_set in task_sets:
         ts, chain_lengths = task_set
         nrof_tasks = sum(chain_lengths)
@@ -193,7 +193,7 @@ def generate_csv_n_task_sets_odd_chains(input = "", output = ""):
                 task_priority = tasks_by_p[i][0]
                 wcet = tasks_by_p[i][1]
                 pred = tasks_by_p[i][2]
-                bcet = wcet
+                bcet = wcet // 2 ################################ BCET = WCET / 2
                 task_period = tasks_by_p[i][3]
                 # INF = int(1e12)
                 # deadline = INF
@@ -431,9 +431,9 @@ def generate_data_SobhaniFigure11():
 
 def generate_data_JiangFigure6():
     path_in = ""
-    path_out = f"./SAG_input_JiangFig6"
+    path_out_main = f"./SAG_input_JiangFig6_BCET"
 
-    path_out = f"./SAG_input_JiangFig6/vary_Unorm"
+    path_out = f"./{path_out_main}/vary_Unorm"
     values = np.arange(0.1, 1.0, 0.1)
     values = [round(v, 1) for v in values]
     for Unorm in values:
@@ -442,25 +442,29 @@ def generate_data_JiangFigure6():
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets_odd_chains(path_in, folder_out)
     
-    path_out = f"./SAG_input_JiangFig6/vary_n"
+    path_out = f"./{path_out_main}/vary_n"
     for n in range(2, 9):
         path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_n/tasksets_n_{n}.txt"
         folder_out = os.path.join(path_out, f"tasksets_{n}")
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets_odd_chains(path_in, folder_out)
     
-    path_out = f"./SAG_input_JiangFig6/vary_b"
+    path_out = f"./{path_out_main}/vary_b"
     for b in range(2, 7):
         path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_b/tasksets_b_{b}.txt"
         folder_out = os.path.join(path_out, f"tasksets_{b}")
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets_odd_chains(path_in, folder_out)
     
-    path_out = f"./SAG_input_JiangFig6/vary_m"
+    path_out = f"./{path_out_main}/vary_m"
     for m in range(2, 9):
         path_in = fr"/home/radu/repos/sag-ros-experiments/data/JiangExp/Figure6/InputToSobhani/vary_m/tasksets_m_{m}.txt"
         folder_out = os.path.join(path_out, f"tasksets_{m}")
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets_odd_chains(path_in, folder_out)
 
-generate_data_JiangFigure6()
+if __name__ == "__main__":
+    # path_in = "/home/radu/repos/sag-ros-experiments/tasksets.txt"
+    # folder_out = "./exam"
+    # generate_csv_n_task_sets_odd_chains(path_in, folder_out)
+    generate_data_JiangFigure6()
