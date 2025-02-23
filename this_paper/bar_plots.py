@@ -66,8 +66,9 @@ def main():
     
     contrast_colors = cycle([  '#2ca02c',  # a solid green (not too lime)
                                '#0000FF',  # a medium blue
+                            #    '#996633', # brown
                                '#7c49ab', # purple
-                               '#FF0000',  # a strong red
+                               '#FF0000', # a strong red
                               ])
 
     # Create the bar plot.
@@ -107,7 +108,7 @@ def main():
     ax.grid(True, axis='y', linewidth=0.5, color='gray', alpha=0.7)
 
     # Place the legend outside the plot at the bottom center.
-    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=6.2)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=5)
 
     plt.tight_layout()
     plt.savefig("JiangCaseStudy.png", bbox_inches="tight", pad_inches=0, dpi=300)

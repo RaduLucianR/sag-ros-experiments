@@ -82,7 +82,7 @@ def main():
     unique_x = sorted(set(all_x_values))
     # unique_x = [i for i in range(1, 11)]
     plt.xticks(unique_x)
-    plt.yticks([i / 10 for i in range(1, 11)])
+    # plt.yticks([i / 10 for i in range(1, 11)])
     # Label the axes and set the title using the command-line provided values.
     plt.xlabel(args.xlabel)
     plt.ylabel(args.ylabel)

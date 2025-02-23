@@ -357,7 +357,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
                 task_priority = tasks_by_p[i][0]
                 wcet = tasks_by_p[i][1]
                 pred = tasks_by_p[i][2]
-                bcet = wcet
+                bcet = max(wcet // 2, 1)
                 task_period = tasks_by_p[i][3]
                 # INF = int(1e12)
                 # deadline = INF
@@ -388,7 +388,7 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
 
 def generate_data_SobhaniFigure9():
     path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_max_5k"
-    path_out = f"./SAG_input_SobhaniFig9"
+    path_out = f"./SAG_input_SobhaniFig9_BCET_half"
     nrof_task_sets = 1000
     nrof_chains = 5
     nrof_callbacks_per_chain = 10
@@ -467,4 +467,5 @@ if __name__ == "__main__":
     # path_in = "/home/radu/repos/sag-ros-experiments/tasksets.txt"
     # folder_out = "./exam"
     # generate_csv_n_task_sets_odd_chains(path_in, folder_out)
-    generate_data_JiangFigure6()
+    # generate_data_JiangFigure6()
+    generate_data_SobhaniFigure9()
