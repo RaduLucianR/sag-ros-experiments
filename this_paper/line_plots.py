@@ -36,12 +36,13 @@ def main():
     all_x_values = []
     
     # Define a list of high-contrast colors and create a cycle.
-    high_contrast_colors = cycle([
-        '#FF0000',  # red
-        '#6820ab',  # purple
-        '#0000FF',  # blue
-        '#964B00',  # brown
-    ])
+    # high_contrast_colors = cycle([
+    #     '#FF0000',  # red
+    #     '#6820ab',  # purple
+    #     '#0000FF',  # blue
+    #     '#964B00',  # brown
+    # ])
+    high_contrast_colors = cycle(plt.get_cmap('tab20').colors)
     markers = cycle(['o', 's', '^'])
     # markers = cycle(['$L$', '$L$', '$W$'])
 

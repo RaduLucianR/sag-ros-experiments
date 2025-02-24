@@ -82,7 +82,7 @@ for SUBFOLDER in "$BASE_DIR"/tasksets_*; do
         fi
 
         # Run the program. (Adjust the path to nptest if necessary.)
-        output=$(./nptest "$TASK_FILE" --merge=no -m 4 -p "$PRED_FILE")
+        output=$("/home/radu/repos/schedule_abstraction-ros2/build/nptest" "$TASK_FILE" --merge=no -m 4 -p "$PRED_FILE")
 
         # The output is expected to be like:
         # /path/to/task_set_x.csv,  0,  3560,  26,  26,  25,  2,  0.000308,  6.878906,  0,  2

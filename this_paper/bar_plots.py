@@ -5,7 +5,21 @@ import glob
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from itertools import cycle
+from itertools import cycle, islice
+
+# Fixed colors at the start and end
+first_color = '#2ca02c'  # Green
+last_two_colors = ['#7c49ab', '#FF0000']  # Purple, Red
+
+# Get the 'tab20' colormap colors
+tab20_colors = list(plt.get_cmap('tab20').colors)
+
+# Define the function to generate the cycle
+def custom_color_cycle(n_intermediate):
+    yield first_color  # First color
+    intermediate_colors = islice(cycle(tab20_colors), n_intermediate)  # Take n_intermediate colors from tab20
+    yield from intermediate_colors
+    yield from last_two_colors  # Last two colors
 
 def main():
     # Parse command-line arguments: either one or more CSV files, or a single directory.
@@ -65,17 +79,19 @@ def main():
     bar_width = width * 0.65
     
     contrast_colors = cycle([  '#2ca02c',  # a solid green (not too lime)
-                               '#0000FF',  # a medium blue
-                            #    '#996633', # brown
+                               '#0000FF',
                                '#7c49ab', # purple
                                '#FF0000', # a strong red
                               ])
+
+    # contrast_colors = cycle(plt.get_cmap('tab20').colors)
+    # contrast_colors = cycle(custom_color_cycle(7))
 
     # Create the bar plot.
         # Set global font properties and colors for high contrast.
     plt.rcParams.update({
         'font.family': 'serif',
-        'font.size': 8.5,         # Reduced font size for a smaller figure
+        'font.size': 6,         # Reduced font size for a smaller figure
         'text.color': '#000000',       # strong black text
         'axes.labelcolor': '#000000',  # strong black axis labels
         'xtick.color': '#000000',      # strong black tick labels
@@ -98,6 +114,8 @@ def main():
     # Set x-axis ticks and labels.
     x_category_labels = [f"Chain {i}" for i in x_categories]
     ax.set_xticks(ind)
+    # ax.set_yticks([i for i in range(10, 180, 5)])
+    # ax.set_yticks([i for i in range(10, 110, 10)])
     ax.set_xticklabels(x_category_labels)
     ax.set_xlabel("")
     ax.set_ylabel("Response Time (ms)")
@@ -108,7 +126,7 @@ def main():
     ax.grid(True, axis='y', linewidth=0.5, color='gray', alpha=0.7)
 
     # Place the legend outside the plot at the bottom center.
-    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=5)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=6)
 
     plt.tight_layout()
     plt.savefig("JiangCaseStudy.png", bbox_inches="tight", pad_inches=0, dpi=300)
