@@ -36,13 +36,13 @@ def main():
     all_x_values = []
     
     # Define a list of high-contrast colors and create a cycle.
-    # high_contrast_colors = cycle([
-    #     '#FF0000',  # red
-    #     '#6820ab',  # purple
-    #     '#0000FF',  # blue
-    #     '#964B00',  # brown
-    # ])
-    high_contrast_colors = cycle(plt.get_cmap('tab20').colors)
+    high_contrast_colors = cycle([
+        '#FF0000',  # red
+        '#6820ab',  # purple
+        '#0000FF',  # blue
+        '#964B00',  # brown
+    ])
+    # high_contrast_colors = cycle(plt.get_cmap('tab20').colors)
     markers = cycle(['o', 's', '^'])
     # markers = cycle(['$L$', '$L$', '$W$'])
 
@@ -80,10 +80,10 @@ def main():
                  label=plot_label, color=color)
 
     # Remove duplicates and sort the x values so that all points (e.g., 0.4) are shown.
-    unique_x = sorted(set(all_x_values))
+    # unique_x = sorted(set(all_x_values))
     # unique_x = [i for i in range(1, 11)]
-    plt.xticks(unique_x)
-    # plt.yticks([i / 10 for i in range(1, 11)])
+    # plt.xticks(unique_x)
+    plt.yticks([i / 10 for i in range(1, 11)])
     # Label the axes and set the title using the command-line provided values.
     plt.xlabel(args.xlabel)
     plt.ylabel(args.ylabel)
