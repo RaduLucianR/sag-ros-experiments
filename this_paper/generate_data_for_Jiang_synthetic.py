@@ -1,6 +1,26 @@
 import random
 from drs import drs
 import os
+import math
+
+def sample_period_log_uniform(T_min, T_max, T_g):
+    """
+    Samples a task period T_i based on a log-uniform distribution.
+    
+    Parameters:
+        T_min (float): Minimum task period.
+        T_max (float): Maximum task period.
+        T_g (float): Granularity; task periods are multiples of T_g.
+    
+    Returns:
+        float: A sampled task period T_i.
+    """
+    # Sample r from a uniform distribution between log(T_min) and log(T_max + T_g)
+    r = random.uniform(math.log(T_min), math.log(T_max + T_g))
+    
+    # Compute the task period T_i using the floor operation as described
+    T_i = math.floor(math.exp(r) / T_g) * T_g
+    return T_i
 
 def round_and_scale(values, target):
     """
@@ -58,17 +78,28 @@ def generate_task_set(U, NC, C):
     A line with a single '-' terminates the task set.
     """
     # Generate NC chain utilizations that sum to U (each ≤ 1)
-    chain_utils = drs(NC, U, [1.0] * NC)
+    # chain_utils = drs(NC, U, [1.0] * NC) ######### For Jiang
+    chain_utils = drs(NC, U) ########### For Sobhani
     
     # Allowed periods: numbers in [50,200] that are multiples of 50 or 20.
-    allowed_periods = [50, 60, 80, 100, 120, 140, 150, 160, 180, 200]
+    # allowed_periods = [50, 60, 80, 100, 120, 140, 150, 160, 180, 200]
     # allowed_periods = [i for i in range(50, 201, 10)]
+    # allowed_periods = [i * 100 for i in range(1, 11)]
+    nrof_jobs = 0
+    periods = []
+
+    while nrof_jobs < 1000 or nrof_jobs > 5000:
+        # periods = [random.choice(allowed_periods) for i in range(NC)]
+        periods = [sample_period_log_uniform(10000, 100000, 5000) for i in range(NC)] # Log-uniform
+        hyperperiod = math.lcm(*periods)
+        nrof_jobs = sum([hyperperiod // t * 10 for t in periods])
     
     output_lines = []
     task_id = 1
     
     for chain_index in range(NC):
-        period = random.choice(allowed_periods)
+        # period = random.choice(allowed_periods)
+        period = periods[chain_index]
         # Compute chain's total execution time E (as an integer)
         E = int(round(period * chain_utils[chain_index]))
         # Ensure E is at least C so it can be partitioned into C positive integers.
@@ -158,7 +189,43 @@ def generate_data_for_Fig6_Jiang():
         output_file = os.path.join(output_folder, output_file)
         generate_file(nrof_task_sets, n, b, Unorm, new_m, output_file)
         print(f"Task sets have been generated in {output_file}")
+    
+def generate_Sobhani_Fig9_lite(nrof_task_sets, n, b, filename="tasksets.txt"):
+    """
+    Generate a file with multiple task sets.
+    """
+    name = "tasksets"
+
+    for i in range(8, 41, 4):
+        U = i / 10
+        full_name = f"{name}_{U}.txt"
+
+        with open(full_name, "w") as f:
+            for _ in range(nrof_task_sets):
+                NC = n
+                C = b
+                task_set = generate_task_set(U, NC, C)
+                f.write(task_set + "\n")
+
+def generate_Sobhani_b(nrof_task_sets, n, filename="tasksets.txt"):
+    """
+    Generate a file with multiple task sets.
+    """
+    name = "tasksets"
+    U = 1.0
+
+    for b in range(11, 21, 1):
+        full_name = f"{name}_{b}.txt"
+
+        with open(full_name, "w") as f:
+            for _ in range(nrof_task_sets):
+                NC = n
+                C = b
+                task_set = generate_task_set(U, NC, C)
+                f.write(task_set + "\n")
 
 if __name__ == "__main__":
     # generate_data_for_Fig6_Jiang()
-    generate_file(5, 8, 5, 0.3, 4)
+    # generate_file(5, 8, 5, 0.3, 4)
+    generate_Sobhani_Fig9_lite(200, 5, 10)
+    # generate_Sobhani_b(200, 5)

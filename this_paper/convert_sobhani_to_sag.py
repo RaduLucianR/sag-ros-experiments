@@ -357,7 +357,8 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
                 task_priority = tasks_by_p[i][0]
                 wcet = tasks_by_p[i][1]
                 pred = tasks_by_p[i][2]
-                bcet = max(wcet // 2, 1)
+                # bcet = max(wcet // 2, 1)
+                bcet = wcet
                 task_period = tasks_by_p[i][3]
                 # INF = int(1e12)
                 # deadline = INF
@@ -387,9 +388,12 @@ def generate_csv_n_task_sets(nrof_task_sets: int, U: float, nrof_chains: int, nr
         task_set_idx +=1
 
 def generate_data_SobhaniFigure9():
-    path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_max_5k"
-    path_out = f"./SAG_input_SobhaniFig9_BCET_half"
-    nrof_task_sets = 1000
+    # path_in = "/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_max_5k"
+    # path_in = "/home/radu/repos/sag-ros-experiments/SAG_input_SobhaniFig9_200sets"
+    # path_in = "/home/radu/repos/sag-ros-experiments/Sobhani_input_Fig9_UUdiscard"
+    path_in = "/home/radu/repos/sag-ros-experiments/Sobhani_input_Fig9_logUniform"
+    path_out = f"./SAG_input_Fig9_logUniform_BCET=WCET"
+    nrof_task_sets = 200
     nrof_chains = 5
     nrof_callbacks_per_chain = 10
 
@@ -398,7 +402,8 @@ def generate_data_SobhaniFigure9():
 
     for U in values:
         print(f"Generating for U={U}")
-        file_in = os.path.join(path_in, f"tasksets_util_{U}.txt")
+        # file_in = os.path.join(path_in, f"tasksets_util_{U}.txt")
+        file_in = os.path.join(path_in, f"tasksets_{U}.txt")
         folder_out = os.path.join(path_out, f"tasksets_{U}")
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets(nrof_task_sets, U, nrof_chains, nrof_callbacks_per_chain, file_in, folder_out)
@@ -463,9 +468,24 @@ def generate_data_JiangFigure6():
         os.makedirs(folder_out, exist_ok=True) 
         generate_csv_n_task_sets_odd_chains(path_in, folder_out)
 
+def generate_data_Sobhani_b():
+    path_in = "/home/radu/repos/sag-ros-experiments/Sobhani_input_b_200sets"
+    path_out = f"./SAG_input_Sobhani_b"
+    nrof_task_sets = 200
+    nrof_chains = 5
+    U = 1.0
+
+    for nrof_callbacks_per_chain in range(2, 21):
+        print(f"Generating for {nrof_callbacks_per_chain} tasks per chain")
+        file_in = os.path.join(path_in, f"tasksets_{nrof_callbacks_per_chain}.txt")
+        folder_out = os.path.join(path_out, f"tasksets_{nrof_callbacks_per_chain}")
+        os.makedirs(folder_out, exist_ok=True) 
+        generate_csv_n_task_sets(nrof_task_sets, U, nrof_chains, nrof_callbacks_per_chain, file_in, folder_out)
+
 if __name__ == "__main__":
     # path_in = "/home/radu/repos/sag-ros-experiments/tasksets.txt"
     # folder_out = "./exam"
     # generate_csv_n_task_sets_odd_chains(path_in, folder_out)
     # generate_data_JiangFigure6()
     generate_data_SobhaniFigure9()
+    # generate_data_Sobhani_b()

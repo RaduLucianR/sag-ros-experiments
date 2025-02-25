@@ -162,7 +162,8 @@ def generate_csv_n_task_sets_odd_chains(input = "", output = ""):
                 task_priority = tasks_by_p[i][0]
                 wcet = tasks_by_p[i][1]
                 pred = tasks_by_p[i][2]
-                bcet = max(1, wcet // 2) ########### BCET is half WCET
+                # bcet = max(1, wcet // 2) ########### BCET is half WCET
+                bcet = wcet
                 task_period = tasks_by_p[i][3]
                 # INF = int(1e12)
                 # deadline = INF

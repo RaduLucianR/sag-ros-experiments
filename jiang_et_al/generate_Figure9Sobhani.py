@@ -8,7 +8,10 @@ def sobhani_figure9():
     results = []
 
     for U in values:
-        path = fr"/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_max_5k/tasksets_util_{U}.txt"
+        # path = fr"/home/radu/repos/sag-ros-experiments/data/SobhaniExp/Fig9/tasksets_nrofjobs_max_5k/tasksets_util_{U}.txt"
+        # path = fr"/home/radu/repos/sag-ros-experiments/Sobhani_input_SobhaniFig9_200sets/tasksets_{U}.txt"
+        # path = fr"/home/radu/repos/sag-ros-experiments/Sobhani_input_Fig9_UUdiscard/tasksets_{U}.txt"
+        path = fr"/home/radu/repos/sag-ros-experiments/Sobhani_input_Fig9_logUniform/tasksets_{U}.txt"
         tasksets = convert_sobhani_synthetic_to_jiang(5, 10, path)
         r = jiang_on_tasksets(tasksets, 4)[0]
         print(f"U={U}, schedulability={r}")
