@@ -78,8 +78,11 @@ def main():
     # To introduce a small gap (roughly equivalent to ~2 pixels), use 95% of the computed width.
     bar_width = width * 0.65
     
-    contrast_colors = cycle([  '#2ca02c',  # a solid green (not too lime)
+    contrast_colors = cycle([  #'#2ca02c',  # a solid green (not too lime)
                                '#0000FF',
+                               '#00AAFF',
+                               '#1e6e0a',
+                               '#3cd117',
                                '#7c49ab', # purple
                                '#FF0000', # a strong red
                               ])
@@ -91,7 +94,7 @@ def main():
         # Set global font properties and colors for high contrast.
     plt.rcParams.update({
         'font.family': 'serif',
-        'font.size': 6,         # Reduced font size for a smaller figure
+        'font.size': 5,         # Reduced font size for a smaller figure
         'text.color': '#000000',       # strong black text
         'axes.labelcolor': '#000000',  # strong black axis labels
         'xtick.color': '#000000',      # strong black tick labels
@@ -99,7 +102,7 @@ def main():
     })
 
     # fig, ax = plt.subplots(figsize=(10, 6))
-    fig, ax = plt.subplots(figsize=(3, 2.5), dpi=300)
+    fig, ax = plt.subplots(figsize=(5, 2.5), dpi=300)
     for i in range(n_files):
         # Compute an offset so that the bars in each group are centered.
         offset = (i - (n_files - 1) / 2) * width
@@ -126,10 +129,10 @@ def main():
     ax.grid(True, axis='y', linewidth=0.5, color='gray', alpha=0.7)
 
     # Place the legend outside the plot at the bottom center.
-    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=6)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=n_files, fontsize=5)
 
     plt.tight_layout()
-    plt.savefig("JiangCaseStudy.png", bbox_inches="tight", pad_inches=0, dpi=300)
+    plt.savefig("JiangCaseStudy.pdf", bbox_inches="tight", pad_inches=0, dpi=300)
     plt.show()
 
 if __name__ == '__main__':

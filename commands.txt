@@ -1,0 +1,4 @@
+plotlines Figure6a_data_Sobhani.csv Figure6a_data_Jiang.csv Figure6a_data_Nasri.csv Figure6a_data_Ours-1.csv --xlabel Unorm --ylabel "Schedulability ratio" --title ""
+plotlines Figure6b_data_Sobhani.csv Figure6b_data_Jiang.csv Figure6b_data_Nasri.csv Figure6b_data_Ours-1.csv --xlabel n --ylabel "Schedulability ratio" --title ""
+plotlines Figure6c_data_Sobhani.csv Figure6c_data_Jiang.csv Figure6c_data_Nasri.csv Figure6c_data_Ours-1.csv --xlabel b --ylabel "Schedulability ratio" --title ""
+plotlines Figure9_data_Sobhani.csv Figure9_data_Jiang.csv Figure9_data_Nasri.csv Figure9_data_Ours-1.csv --xlabel b --ylabel "Schedulability ratio" --title ""

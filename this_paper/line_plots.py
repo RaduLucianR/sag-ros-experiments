@@ -3,6 +3,8 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from itertools import cycle
+import numpy as np
+from scipy.optimize import curve_fit
 
 def main():
     # Set up argument parser.
@@ -40,10 +42,10 @@ def main():
         '#FF0000',  # red
         '#6820ab',  # purple
         '#0000FF',  # blue
-        '#964B00',  # brown
+        '#4bba70',  # green
     ])
     # high_contrast_colors = cycle(plt.get_cmap('tab20').colors)
-    markers = cycle(['o', 's', '^'])
+    markers = cycle(['o', 's', '^', 'v'])
     # markers = cycle(['$L$', '$L$', '$W$'])
 
     # Process each CSV file.
@@ -57,9 +59,17 @@ def main():
         # Extract the X and Y columns.
         x = df.iloc[:, 0]
         y = df.iloc[:, 1]
+        # def model(n, a, b):
+        #     return a * (2 ** n) + b
+        # popt, pcov = curve_fit(model, x, y)
+        # a_fit, b_fit = popt
+        # print(f"Fitted parameters: a = {a_fit}, b = {b_fit}")
+        # n_range = np.linspace(x.min(), x.max(), 100)
+        # y_fit = model(n_range, a_fit, b_fit)
+        # plt.plot(n_range, y_fit, label=r'Fitted $a\cdot2^n+b$', color="#000000")
         
         # Save the x values for later tick adjustment.
-        all_x_values.extend(x.tolist())
+        # all_x_values.extend(x.tolist())
         
         # Determine the plot label by extracting the part of the filename before .csv.
         base_name = os.path.basename(csv_file)
@@ -81,15 +91,18 @@ def main():
 
     # Remove duplicates and sort the x values so that all points (e.g., 0.4) are shown.
     # unique_x = sorted(set(all_x_values))
-    # unique_x = [i for i in range(1, 11)]
+    # unique_x = [i / 10 for i in range(4, 41, 4)]
     # plt.xticks(unique_x)
-    plt.yticks([i / 10 for i in range(1, 11)])
-    # plt.yticks([0.9 + i/ 100 for i in range(1, 11)])
+    # plt.xticks([i for i in range(1,17, 2)])
+    plt.yticks([i / 10 for i in range(0, 11)])
+    # plt.yticks([0.8 + i / 100 for i in range(0, 21, 5)])
     # Label the axes and set the title using the command-line provided values.
     plt.xlabel(args.xlabel)
     plt.ylabel(args.ylabel)
+    # plt.yscale('log')
     plt.title(args.title)
-    plt.legend(fontsize=8)  # reduce legend font size if needed
+    plt.legend(fontsize=7)  # reduce legend font size if needed
+    # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.2), ncol=4, fontsize=6)
     plt.grid(True, linewidth=0.5, color='gray', alpha=0.7)
     plt.tight_layout()  # Adjusts subplot params for a neat fit
     
@@ -101,7 +114,7 @@ def main():
     # Save the figure.
     title = "Fig9"
     # output_path = f"/home/radu/repos/sag-ros-experiments/data/SobhaniExp/{title}/tasksets_nrofjobs_max_5k/{title}Tight.png"
-    output_path = "./fig.png"
+    output_path = "./fig.pdf"
     plt.savefig(output_path,
                 bbox_inches="tight", pad_inches=0, dpi=300)
 
